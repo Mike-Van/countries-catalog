@@ -59,7 +59,8 @@ jobs:
       - name: Build with Next.js
         run: |
           yarn build
-          yarn next export
+          cat next.config.mjs
+          cat next.config.js
           ls ./
           ls ./out
       - name: Upload artifact
