@@ -10,15 +10,13 @@ export const Pagination = () => {
 	const router = useRouter();
 
 	const { isLoading, data = [] } = useGetAllCountriesCache();
-	const filteredData = useFilteredData();
+	const { searched } = useFilteredData();
 
 	const pagesCount = useMemo(() => {
 		if (!data.length) return 1;
 
-		if (router.query.search) return Math.ceil(filteredData.length / PAGE_SIZE);
-
-		return Math.ceil(data.length / PAGE_SIZE);
-	}, [data, filteredData, router.query.search]);
+		return router.query.search ? Math.ceil(searched.length / PAGE_SIZE) : Math.ceil(data.length / PAGE_SIZE);
+	}, [data, searched, router.query.search]);
 
 	return (
 		<MuiPagination

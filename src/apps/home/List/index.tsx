@@ -7,13 +7,13 @@ export const List = () => {
 	const router = useRouter();
 
 	const { isLoading } = useGetAllCountriesCache();
-	const filteredData = useFilteredData();
+	const { paginated } = useFilteredData();
 
 	if (isLoading) return <CircularProgress />;
 
 	return (
 		<Grid container spacing={3}>
-			{filteredData.map((country) => (
+			{paginated.map((country) => (
 				<Grid
 					key={country.cca2}
 					item

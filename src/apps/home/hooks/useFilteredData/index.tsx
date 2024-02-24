@@ -9,8 +9,13 @@ export const useFilteredData = () => {
 
 	const { data = [] } = useGetAllCountriesCache();
 
-	const filtredData = useMemo(() => {
-		if (!data.length) return [];
+	return useMemo(() => {
+		if (!data.length)
+			return {
+				sorted: [],
+				searched: [],
+				paginated: [],
+			};
 
 		const sorted = data.sort((a, b) => {
 			if (router.query.sortOrder === 'desc') return b.name.official.localeCompare(a.name.official);
@@ -26,8 +31,6 @@ export const useFilteredData = () => {
 		const page = Number(router.query.page) || 1;
 		const paginated = searched.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-		return paginated;
+		return { sorted, searched, paginated };
 	}, [data, router.query.sortOrder, router.query.search, router.query.page]);
-
-	return filtredData;
 };
