@@ -9,31 +9,25 @@ export const useFilteredData = () => {
 
 	const { data = [] } = useGetAllCountriesCache();
 
-	const sortedData = useMemo(() => {
+	const filtredData = useMemo(() => {
 		if (!data.length) return [];
 
-		return data.sort((a, b) =>
-			router.query.sortOrder === 'desc'
-				? b.name.official.localeCompare(a.name.official)
-				: a.name.official.localeCompare(b.name.official)
-		);
-	}, [data, router.query.sortOrder]);
+		const sorted = data.sort((a, b) => {
+			if (router.query.sortOrder === 'desc') return b.name.official.localeCompare(a.name.official);
+			return a.name.official.localeCompare(b.name.official);
+		});
 
-	const filteredData = useMemo(() => {
-		if (!sortedData.length) return [];
-
-		return sortedData.filter((country) =>
+		const searched = sorted.filter((country) =>
 			router.query.search
-				? country.name.official.toLowerCase().includes((router.query.search as string).toLowerCase())
+				? country.name.official.toLowerCase().includes(String(router.query.search).toLowerCase())
 				: true
 		);
-	}, [sortedData, router.query.search]);
 
-	const paginatedData = useMemo(() => {
 		const page = Number(router.query.page) || 1;
+		const paginated = searched.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-		return filteredData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-	}, [filteredData, router.query.page]);
+		return paginated;
+	}, [data, router.query.sortOrder, router.query.search, router.query.page]);
 
-	return paginatedData;
+	return filtredData;
 };

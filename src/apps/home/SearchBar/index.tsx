@@ -22,9 +22,9 @@ export const SearchBar = () => {
 						</InputAdornment>
 					),
 				}}
-				defaultValue={router.query.search}
+				// defaultValue={router.query.search}
 				onChange={(e) => {
-					router.push({ query: { ...router.query, search: e.target.value, page: 1 } }); // reset page number when searching
+					router.push({ query: { ...router.query, search: String(e.target.value).trim(), page: 1 } }); // reset page number when searching
 				}}
 			/>
 

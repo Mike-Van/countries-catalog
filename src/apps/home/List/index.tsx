@@ -15,9 +15,9 @@ export const List = () => {
 		<Grid container spacing={3}>
 			{filteredData.map((country) => (
 				<Grid
+					key={country.cca2}
 					item
 					xs={2.4}
-					key={country.cca2}
 					onClick={() => router.push({ query: { ...router.query, country: country.cca2 } })}
 				>
 					<CardMedia component="img" image={country.flags.png} alt={country.flags.alt} />
