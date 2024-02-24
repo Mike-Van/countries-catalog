@@ -1,10 +1,22 @@
-import { Box, Typography } from '@mui/material';
+import { Container, Stack } from '@mui/material';
+import { useGetAllCountries } from '~/queries/useGetAllCountries';
+import { CurrentCountryModal } from './CurrentCountryModal';
+import { SearchBar } from './SearchBar';
+import { List } from './List';
+import { Pagination } from './Pagination';
 
 export const HomeApp = () => {
+	// fetch initial data
+	useGetAllCountries({ enabled: true });
+
 	return (
-		<>
-			<Box>HomeApp</Box>
-			<Typography variant="body1">HomeApp</Typography>
-		</>
+		<Container maxWidth={false}>
+			<CurrentCountryModal />
+			<Stack gap={3} alignItems="center">
+				<SearchBar />
+				<List />
+				<Pagination />
+			</Stack>
+		</Container>
 	);
 };
