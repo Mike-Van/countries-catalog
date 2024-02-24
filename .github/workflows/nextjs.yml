@@ -64,6 +64,7 @@ jobs:
           cat next.config.js
           ls ./
           ls ./out
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
